@@ -37,7 +37,13 @@ window.onload = function () {
         mounted: async function () {
             for (var s in this.servers) {
                 const ret= await getstatus(this.servers[s].name);
-                this.$set(this.servers[s], "status", ret);
+                var r=""
+                if (ret == "200") {
+                    r="✅";
+                } else {
+                    r="❌";
+                }
+                this.$set(this.servers[s], "status", r+ret);
             }
         }
     });
