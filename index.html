@@ -28,15 +28,15 @@ window.onload = function () {
         el: "#app", 
         data: {
             servers:[
-                { name:"https://noyuno.space"}, 
-                { name:"https://s.noyuno.space"}, 
-                { name:"https://git.noyuno.space"}, 
-                { name:"http://status.noyuno.space"}
+                { name:"noyuno.space"}, 
+                { name:"s.noyuno.space"}, 
+                { name:"git.noyuno.space"}, 
+                { name:"status.noyuno.space"}
             ]
         }, 
         mounted: async function () {
             for (var s in this.servers) {
-                const ret= await getstatus(this.servers[s].name);
+                const ret= await getstatus("https://"+this.servers[s].name);
                 var r=""
                 if (ret == "200") {
                     r="✅";
