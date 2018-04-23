@@ -7,23 +7,7 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
 <script>
-async function getstatus(name) {
-    var status = "";
-    console.log(name);
-    await axios.get(name, {
-        validateStatus: function (status) {
-            return true;
-        }
-    }).then(function (res) {
-        status = res.status
-    }).catch(function (error) {
-        console.log(error);
-        status = "error";
-    });
-    return status;
-}
 window.onload = function () {
-
     var app = new Vue({
         el: "#app", 
         data: {
@@ -36,14 +20,23 @@ window.onload = function () {
         }, 
         mounted: async function () {
             for (var s in this.servers) {
-                const ret= await getstatus("https://"+this.servers[s].name);
-                var r=""
-                if (ret == "200") {
-                    r="✅";
-                } else {
-                    r="❌";
-                }
-                this.$set(this.servers[s], "status", r+ret);
+                axios.get(name, {
+                    validateStatus: function (status) {
+                        return true;
+                    }
+                }).then(function (res) {
+                    var r=""
+                    if (res.status == "200") {
+                        r="✅";
+                    } else {
+                        r="❌";
+                    }
+                    this.$set(this.servers[s], "status", r+ret);
+                }).catch(function (error) {
+                    console.log(error);
+                    this.$set(this.servers[s], "status", "❌error");
+                });
+
             }
         }
     });
