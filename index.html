@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+        <title>さーばーきゃっと</title>
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+<script>
+async function getstatus(name) {
+    var status = "";
+    console.log(name);
+    await axios.get(name, {
+        validateStatus: function (status) {
+            return true;
+        }
+    }).then(function (res) {
+        status = res.status
+    }).catch(function (error) {
+        console.log(error);
+        status = "error";
+    });
+    return status;
+}
+window.onload = function () {
+
+    var app = new Vue({
+        el: "#app", 
+        data: {
+            servers:[
+                { name:"https://noyuno.space"}, 
+                { name:"https://s.noyuno.space"}, 
+                { name:"https://git.noyuno.space"}, 
+                { name:"http://status.noyuno.space"}
+            ]
+        }, 
+        mounted: async function () {
+            for (var s in this.servers) {
+                const ret= await getstatus(this.servers[s].name);
+                this.$set(this.servers[s], "status", ret);
+            }
+        }
+    });
+};
+</script>
+    <body>
+        <div id="app">
+        <h1>さーばーじょうたい</h1>
+        <table id="list">
+            <tr>
+                <td>なまえ</td>
+                <td>じょうたい</td>
+            </tr>
+            <tr v-for="server in servers">
+                <td><a>{{ server.name }}</a></td>
+                <td>{{ server.status }}</td>
+            </tr>
+        </table>
+        </div>
+    </body>
+</html>
