@@ -36,6 +36,9 @@ window.onload = function () {
         }, 
         mounted: async function () {
             for (var s in this.servers) {
+                this.$set(this.servers[s], "url", "https://" + this.servers[s].name);
+            }
+            for (var s in this.servers) {
                 const ret= await getstatus("https://"+this.servers[s].name);
                 var r=""
                 if (ret == "200") {
@@ -58,7 +61,7 @@ window.onload = function () {
                 <td>じょうたい</td>
             </tr>
             <tr v-for="server in servers">
-                <td><a>{{ server.name }}</a></td>
+                <td><a :href="server.url">{{ server.name }}</a></td>
                 <td>{{ server.status }}</td>
             </tr>
         </table>
