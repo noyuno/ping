@@ -24,9 +24,8 @@ window.onload = () => {
                 this.$set(this.servers[s], "url", "https://" + this.servers[s].name);
             }
             for (var s in this.servers) {
-                // const ret= await getstatus("https://"+this.servers[s].name);
-                var name = "https://"+this.servers[s].name;
                 ((s) => {
+                    var name = "https://"+this.servers[s].name;
                     axios.get(name, {
                         validateStatus: (status) => { return true; }
                     }).then((res) =>{
