@@ -31,11 +31,15 @@ window.onload = () => {
                         axios.get(name, {
                             validateStatus: (status) => { return true; }
                         }).then((res) =>{
-                            this.$set(this.servers[s], "status", "✅"+res.status);
+                            if (res.status == "200") {
+                                this.$set(this.servers[s], "status", "✅"+res.status);
+                            } else {
+                                this.$set(this.servers[s], "status", "❌"+res.status);
+                            }
                         }).catch((error) => {
                             console.log(name);
                             console.log(error);
-                            this.$set(this.servers[s], "status", "❌"+"error");
+                            this.$set(this.servers[s], "status", "❌"+"CORS");
                         });
                     })(s);
                 }
