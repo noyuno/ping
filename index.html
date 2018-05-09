@@ -13,10 +13,11 @@ window.onload = () => {
         el: "#app", 
         data: {
             servers:[
-                { name:"noyuno.space",      description:"root"}, 
-                { name:"dir.noyuno.space",  description:"ownCloud: storage"}, 
-                { name:"git.noyuno.space",  description:"GitBucket: Git"}, 
-                { name:"s.noyuno.space",    description:"Pleroma: SNS"}, 
+                { name:"noyuno.space",      description:"main"}, 
+                { name:"dir.noyuno.space",  description:"ownCloud"}, 
+                { name:"git.noyuno.space",  description:"GitBucket"}, 
+                { name:"mail.noyuno.space",    description:"mail"}, 
+                { name:"s.noyuno.space",    description:"Pleroma"}, 
             ]
         }, 
         mounted: function () {
@@ -39,7 +40,7 @@ window.onload = () => {
                         }).catch((error) => {
                             console.log(name);
                             console.log(error);
-                            this.$set(this.servers[s], "status", "❌"+"CORS");
+                            this.$set(this.servers[s], "status", "❌"+"error");
                         });
                     })(s);
                 }
