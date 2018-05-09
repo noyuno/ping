@@ -19,24 +19,29 @@ window.onload = () => {
                 { name:"s.noyuno.space",    description:"Pleroma: SNS"}, 
             ]
         }, 
-        mounted: async function () {
-            for (var s in this.servers) {
-                this.$set(this.servers[s], "url", "https://" + this.servers[s].name);
+        mounted: function () {
+            var ping = ()=> {
+                for (var s in this.servers) {
+                    this.$set(this.servers[s], "url", "https://" + this.servers[s].name);
+                }
+                for (var s in this.servers) {
+                    ((s) => {
+                        this.$set(this.servers[s], "status", "⏳");
+                        var name = "https://"+this.servers[s].name;
+                        axios.get(name, {
+                            validateStatus: (status) => { return true; }
+                        }).then((res) =>{
+                            this.$set(this.servers[s], "status", "✅"+res.status);
+                        }).catch((error) => {
+                            console.log(name);
+                            console.log(error);
+                            this.$set(this.servers[s], "status", "❌"+"error");
+                        });
+                    })(s);
+                }
             }
-            for (var s in this.servers) {
-                ((s) => {
-                    var name = "https://"+this.servers[s].name;
-                    axios.get(name, {
-                        validateStatus: (status) => { return true; }
-                    }).then((res) =>{
-                        this.$set(this.servers[s], "status", "✅"+res.status);
-                    }).catch((error) => {
-                        console.log(name);
-                        console.log(error);
-                        this.$set(this.servers[s], "status", "❌"+"error");
-                    });
-                })(s);
-            }
+            ping(this);
+            setInterval(()=>{ping(this);}, 15*1000);
         }
     });
 };
