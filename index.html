@@ -8,31 +8,15 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
 <script>
-async function getstatus(name) {
-    var status = "";
-    console.log(name);
-    await axios.get(name, {
-        validateStatus: function (status) {
-            return true;
-        }
-    }).then(function (res) {
-        status = res.status
-    }).catch(function (error) {
-        console.log(error);
-        status = "error";
-    });
-    return status;
-}
-window.onload = function () {
-
+window.onload = () => {
     var app = new Vue({
         el: "#app", 
         data: {
             servers:[
-                { name:"noyuno.space"}, 
-                { name:"s.noyuno.space"}, 
-                { name:"git.noyuno.space"}, 
-                { name:"dir.noyuno.space"}, 
+                { name:"noyuno.space",      description:"root"}, 
+                { name:"dir.noyuno.space",  description:"ownCloud: storage"}, 
+                { name:"git.noyuno.space",  description:"GitBucket: Git"}, 
+                { name:"s.noyuno.space",    description:"Pleroma: SNS"}, 
             ]
         }, 
         mounted: async function () {
@@ -40,14 +24,19 @@ window.onload = function () {
                 this.$set(this.servers[s], "url", "https://" + this.servers[s].name);
             }
             for (var s in this.servers) {
-                const ret= await getstatus("https://"+this.servers[s].name);
-                var r=""
-                if (ret == "200") {
-                    r="✅";
-                } else {
-                    r="❌";
-                }
-                this.$set(this.servers[s], "status", r+ret);
+                // const ret= await getstatus("https://"+this.servers[s].name);
+                var name = "https://"+this.servers[s].name;
+                ((s) => {
+                    axios.get(name, {
+                        validateStatus: (status) => { return true; }
+                    }).then((res) =>{
+                        this.$set(this.servers[s], "status", "✅"+res.status);
+                    }).catch((error) => {
+                        console.log(name);
+                        console.log(error);
+                        this.$set(this.servers[s], "status", "❌"+"error");
+                    });
+                })(s);
             }
         }
     });
@@ -60,12 +49,17 @@ window.onload = function () {
             <tr>
                 <td>なまえ</td>
                 <td>じょうたい</td>
+                <td>せつめい</td>
             </tr>
             <tr v-for="server in servers">
                 <td><a :href="server.url">{{ server.name }}</a></td>
                 <td>{{ server.status }}</td>
+                <td>{{ server.description }}</td>
             </tr>
         </table>
         </div>
     </body>
+    <hr>
+    <address><a href="https://s.noyuno.space/users/1">@noyuno</a></address>
 </html>
+
