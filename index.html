@@ -13,12 +13,13 @@ window.onload = () => {
         el: "#app", 
         data: {
             servers:[
-                { name:"noyuno.space",       description:"main"},
-                { name:"dir.noyuno.space",   description:"ownCloud"},
-                { name:"git.noyuno.space",   description:"GitBucket"},
-                { name:"s.noyuno.space",     description:"Pleroma"},
-                { name:"v.noyuno.space",     description:"VPS"},
-                { name:"git2.noyuno.space", description:"GitBucket on VPS"},
+                { name:"noyuno.space",       location:"v",  description:"VPS"},
+                { name:"dir.noyuno.space",   location:"pi", description:"ownCloud"},
+                { name:"git.noyuno.space",   location:"v",  description:"GitBucket"},
+                { name:"git2.noyuno.space",  location:"pi", description:"GitBucket"},
+                { name:"s.noyuno.space",     location:"v",  description:"Pleroma"},
+                { name:"pi.noyuno.space",    location:"pi", description:""},
+                { name:"v.noyuno.space",     location:"v",  description:""},
             ]
         }, 
         mounted: function () {
@@ -54,19 +55,25 @@ window.onload = () => {
 </script>
     <body>
         <div id="app">
-        <h1>さーばーきゃっと</h1>
-        <table id="list">
-            <tr>
-                <td>なまえ</td>
-                <td>じょうたい</td>
-                <td>せつめい</td>
-            </tr>
-            <tr v-for="server in servers">
-                <td><a :href="server.url">{{ server.name }}</a></td>
-                <td>{{ server.status }}</td>
-                <td>{{ server.description }}</td>
-            </tr>
-        </table>
+            <h1>さーばーきゃっと</h1>
+            <table id="list">
+                <tr>
+                    <td>なまえ</td>
+                    <td>じょうたい</td>
+                    <td>ばしょ</td>
+                    <td>せつめい</td>
+                </tr>
+                <tr v-for="server in servers">
+                    <td><a :href="server.url">{{ server.name }}</a></td>
+                    <td>{{ server.status }}</td>
+                    <td>{{ server.location }}</td>
+                    <td>{{ server.description }}</td>
+                </tr>
+            </table>
+            <dl>
+                <dt>v</dt> <dd>VPS</dd>
+                <dt>pi</dt><dd>Raspberry Pi</dd>
+            </dl>
         </div>
     </body>
     <hr>
