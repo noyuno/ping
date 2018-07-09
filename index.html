@@ -13,13 +13,14 @@ window.onload = () => {
         el: "#app", 
         data: {
             servers:[
-                { name:"noyuno.space",       location:"v",  description:"VPS"},
-                { name:"dir.noyuno.space",   location:"pi", description:"ownCloud"},
-                { name:"git.noyuno.space",   location:"v",  description:"GitBucket"},
-                { name:"pigit.noyuno.space",  location:"pi", description:"GitBucket"},
+                { name:"k.noyuno.space",     location:"k",  description:""},
+                { name:"git.noyuno.space",   location:"k",  description:"GitBucket"},
+                { name:"mc.noyuno.space",     location:"k",  description:"Minecraft"},
+                { name:"v.noyuno.space",       location:"v",  description:""},
                 { name:"s.noyuno.space",     location:"v",  description:"Pleroma"},
                 { name:"pi.noyuno.space",    location:"pi", description:""},
-                { name:"v.noyuno.space",     location:"v",  description:""},
+                { name:"dir.noyuno.space",   location:"pi", description:"ownCloud"},
+                { name:"pigit.noyuno.space",  location:"pi", description:"GitBucket"},
             ]
         }, 
         mounted: function () {
@@ -58,25 +59,26 @@ window.onload = () => {
             <h1>さーばーきゃっと</h1>
             <table id="list">
                 <tr>
+                    <td>ばしょ</td>
                     <td>なまえ</td>
                     <td>じょうたい</td>
-                    <td>ばしょ</td>
-                    <td>せつめい</td>
+                    <td>さーびす</td>
                 </tr>
                 <tr v-for="server in servers">
+                    <td>{{ server.location }}</td>
                     <td><a :href="server.url">{{ server.name }}</a></td>
                     <td>{{ server.status }}</td>
-                    <td>{{ server.location }}</td>
                     <td>{{ server.description }}</td>
                 </tr>
             </table>
             <dl>
-                <dt>v</dt> <dd>VPS</dd>
+                <dt>k</dt> <dd>Kagoya VPS</dd>
+                <dt>v</dt> <dd>Vultr VPS</dd>
                 <dt>pi</dt><dd>Raspberry Pi</dd>
             </dl>
         </div>
     </body>
     <hr>
-    <address><a href="https://s.noyuno.space/users/1">@noyuno</a></address>
+    <address><a href="https://noyuno.github.io">noyuno</a></address>
 </html>
 
